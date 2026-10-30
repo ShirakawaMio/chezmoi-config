@@ -1,0 +1,44 @@
+
+[settings]
+lockfile = true
+minimum_release_age = '24h'
+lockfile_platforms = [
+  "linux-x64",
+  "linux-arm64",
+  "macos-arm64",
+]
+
+# 保留旧版本，供 Generation 回滚
+[settings.upgrade]
+auto_prune = false
+
+# mise 自身独立管理，避免自动更新破坏版本一致性
+[settings.self_update]
+auto = false
+
+[tools]
+# JavaScript runtime
+node = '24'
+
+# AI coding agents
+codex = 'latest'
+claude = 'latest'
+'npm:@getpaseo/cli' = 'latest'
+
+# Terminal
+zoxide = 'latest'
+yazi = '0.4.2'
+
+# Editor
+neovim = 'latest'
+
+# Developer tools
+uv = 'latest'
+gh = 'latest'
+chezmoi = 'latest'
+
+# Shell
+'conda:zsh' = 'latest'
+
+# Prompt
+starship = 'latest'

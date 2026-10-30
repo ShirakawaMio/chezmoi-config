@@ -1,0 +1,56 @@
+eval "$("$HOME/.local/bin/mise" activate zsh)"
+export PATH=$HOME/.local/bin:$PATH
+export EDITOR=nvim
+export VISUAL=nvim
+eval "$(zoxide init zsh)"
+
+# Yazi: open it as a directory-changing shell command.
+y() {
+  local tmp cwd
+  tmp="$(mktemp -t yazi-cwd.XXXXXX)"
+  command yazi "$@" --cwd-file="$tmp"
+  if IFS= read -r cwd < "$tmp" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+    builtin cd -- "$cwd"
+  fi
+  rm -f -- "$tmp"
+}
+
+# Oh My Zsh
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="tokyonight"
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+source "$ZSH/oh-my-zsh.sh"
+
+alias zshconfig="$EDITOR ~/.zshrc"
+alias ll="ls -lah"
+
+zstyle ':completion:*' matcher-list \
+  'm:{a-z0-9}={A-Z0-9}' \
+  'r:|[._-]=* r:|=*' \
+  'l:|=* r:|=*'
+
+git() {
+  local subcommand="$1"
+
+  command git "$@"
+  local exit_code=$?
+
+  case "$subcommand" in
+    add|rm|mv|checkout|switch|restore|reset|merge|rebase|\
+    cherry-pick|revert|pull|clean)
+      command git status --short --branch
+      ;;
+    stash)
+      case "$2" in
+        apply|push|save|drop|clear)
+          command git status --short --branch
+          ;;
+      esac
+      ;;
+  esac
+
+  return "$exit_code"
+}
+
+# Starship prompt
+eval "$(starship init zsh)"
