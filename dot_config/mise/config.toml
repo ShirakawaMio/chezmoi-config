@@ -21,6 +21,7 @@ auto = false
 node = '24'
 
 # AI coding agents
+agy = 'latest'
 codex = 'latest'
 claude = 'latest'
 'npm:@getpaseo/cli' = 'latest'
@@ -42,3 +43,6 @@ chezmoi = 'latest'
 
 # Prompt
 starship = 'latest'
+
+[env]
+AGY_CLI_DISABLE_AUTO_UPDATE = 'true'
