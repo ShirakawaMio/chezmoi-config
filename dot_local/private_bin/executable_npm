@@ -1,0 +1,44 @@
+#!/bin/sh
+# Mirrors home/modules/policies/npm.nix in ShirakawaMio/nix-darwin. Unlike on
+# Nix, the npm global prefix here is the writable mise node install, so
+# `npm -g` really installs; global CLIs belong in the mise config instead.
+# Every `npm link` form writes the global prefix even without -g: bare
+# `npm link` links the cwd globally, and `npm link <pkg>` installs <pkg>
+# globally from the registry when it is not linked yet.
+
+self_dir=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)
+real_npm=
+IFS=:
+for dir in $PATH; do
+  [ "$(CDPATH= cd -- "$dir" 2>/dev/null && pwd -P)" = "$self_dir" ] && continue
+  if [ -x "$dir/npm" ]; then
+    real_npm="$dir/npm"
+    break
+  fi
+done
+unset IFS
+if [ -z "$real_npm" ]; then
+  echo "npm: no real npm found on PATH" >&2
+  exit 127
+fi
+
+case "$1" in
+  install | i | add | uninstall | remove | rm | update | up | exec)
+    for arg in "$@"; do
+      case "$arg" in
+        -g | --global | --location=global)
+          echo "Blocked: global npm install is disabled."
+          echo "Use project dependencies, npx, or mise use -g npm:<pkg> instead."
+          exit 1
+          ;;
+      esac
+    done
+    ;;
+  link | ln)
+    echo "Blocked: npm link writes to the global prefix."
+    echo "Use a directory dependency instead: npm install ../package"
+    exit 1
+    ;;
+esac
+
+exec "$real_npm" "$@"
