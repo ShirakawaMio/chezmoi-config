@@ -24,7 +24,7 @@ node = '24'
 agy = 'latest'
 codex = 'latest'
 claude = 'latest'
-'npm:@getpaseo/cli' = 'latest'
+'npm:@getpaseo/cli' = '0.16.2'
 
 # Terminal
 zoxide = 'latest'

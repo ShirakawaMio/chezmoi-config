@@ -2,6 +2,6 @@
   "name": "mise-npm-install",
   "private": true,
   "dependencies": {
-    "@getpaseo/cli": "0.13.2"
+    "@getpaseo/cli": "0.16.2"
   }
 }

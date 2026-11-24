@@ -318,10 +318,10 @@ checksum = "sha256:aa9549349e47dffaa42dcf95d6e06ade8c4bdafc980979883b88767670df3
 url = "https://nodejs.org/dist/v24.22.2/node-v24.22.2-darwin-arm64.tar.gz"
 
 [[tools."npm:@getpaseo/cli"]]
-version = "0.13.2"
-aube = { path = "locks/npm-getpaseo-cli/0.13.2", digest = "sha256:fe217cc5cac54ec108fa0b5bd51c8268e45c9e576443fcb8891c99bb8ca335ca" }
+version = "0.16.2"
+aube = { path = "locks/npm-getpaseo-cli/0.16.2", digest = "sha256:2de4382265656a9e99c934191f827071621a4dd9cef21defcba3efc7935e54d8" }
 backend = "npm:@getpaseo/cli"
-specifiers = ["latest"]
+specifiers = ["0.16.2"]
 
 [[tools.starship]]
 version = "1.27.0"
