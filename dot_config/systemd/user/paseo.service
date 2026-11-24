@@ -1,0 +1,18 @@
+[Unit]
+Description=Paseo development agent daemon (loopback only)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+# mise shims resolve tool versions from ~/.config/mise/config.toml, so the unit
+# survives tool upgrades. ~/.local/bin comes first so the npm global-install
+# blocker also applies to agents started by Paseo.
+Environment=PATH=%h/.local/bin:%h/.local/share/mise/shims:/usr/local/bin:/usr/bin:/bin
+ExecStart=%h/.local/share/mise/shims/paseo daemon run
+WorkingDirectory=%h
+Restart=on-failure
+RestartSec=5
+UMask=0077
+
+[Install]
+WantedBy=default.target
